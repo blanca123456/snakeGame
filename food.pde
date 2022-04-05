@@ -1,5 +1,5 @@
 class Food {
-  color foodColor = color(255, 0, 0);
+  color foodColor = color(255);
   PVector position;
 
   Food(PVector _position) {

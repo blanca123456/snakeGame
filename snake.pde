@@ -9,6 +9,10 @@ class Snake {
   Snake(PVector _position) {
     tail = new ArrayList<PVector>();
     tail.add(_position);
+
+    for (int i = 0; i < 15; i++) {
+      tail.add(new PVector(_position.x + i*3*xSpeed, _position.y + i*3*ySpeed));
+    }
   }
 
   void update() {
@@ -18,10 +22,25 @@ class Snake {
       PVector head = tail.get(length - 1);
       tail.add(new PVector(head.x + 3*xSpeed, head.y + 3*ySpeed));
 
-
       if (!checkFood(food)) {
         tail.remove(0);
       }
+
+      head = tail.get(length - 1);
+      if (head.x > width) {
+        head.x = 0;
+      } 
+      if (head.x < 0) {
+        head.x = width;
+      } 
+      if (head.y > height) {
+        head.y = 0;
+      } 
+      if (head.y < 0) {
+        head.y = height;
+      }
+
+      checkCollision();
     }
   }
 
@@ -30,11 +49,11 @@ class Snake {
     int length = tail.size();
     PVector head = tail.get(length - 1);
     for (PVector segment : tail) {
-      
-      if(segment != head){
-        if (head.dist(segment) < 3*xSpeed - 1 ) {
-        gameState = "GAME_OVER";
-      }
+
+      if (segment != head) {
+        if (head.dist(segment) < 20 ) {
+          gameState = "GAME_OVER";
+        }
         break;
       }
     }
